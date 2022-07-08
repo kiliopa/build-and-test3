@@ -5,8 +5,7 @@ orbs:
 
 
 jobs:   
-  test:
-     working_directory: ~/build-and-test3
+  test:     
      docker:
       - image: cimg/node:15.1
    
