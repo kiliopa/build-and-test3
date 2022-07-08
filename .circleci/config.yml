@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
-  heroku: circleci/heroku@1.2.6
+ # heroku: circleci/heroku@1.2.6
 
 setup: true
 
@@ -24,10 +24,10 @@ jobs:
       #     root: ~/project
       #     paths:
       #       - .
-  deploy: # this can be any name you choose
-    docker:
-      - image: cimg/node:17.2.0
-    steps:
+ # deploy: # this can be any name you choose
+  #  docker:
+  #    - image: cimg/node:17.2.0
+ #   steps:
       - checkout
       # - attach_workspace:
       #     at: ~/project
