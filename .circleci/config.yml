@@ -1,26 +1,23 @@
 version: 2.1
+
 orbs:
-  node: circleci/node@5.0.2
+   node: circleci/node@4.1
 
-jobs:
-  build_and_test:
-    executor: node/default
+
+jobs:   
+  test:
+     working_directory: ~/build-and-test3
+     docker:
+      - image: cimg/node:15.1
+   
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - checkout     
+      - node/install-packages    
       - run:
-          command: yarn test
           name: Run tests
-      - run:
-          command: yarn build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+          command: npm test
 
-workflows:
-  test_my_app:
+workflows: 
+  sample:
     jobs:
-      - build_and_test
+      - test
