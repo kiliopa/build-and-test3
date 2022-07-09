@@ -38,8 +38,3 @@ workflows:
       #     filters:
       #       branches:
       #         only: master # only deploy when on main/master
- 
-
-  run-if-main:
-    jobs:
-      - checking-branch
