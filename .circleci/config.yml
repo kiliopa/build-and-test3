@@ -2,29 +2,38 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
- # heroku: circleci/heroku@1.2.6
+  heroku: circleci/heroku@1.2.6
 
 setup: true
 
 jobs:
   build_and_test:
-    working_directory: ~/build-and-test3
     docker:
       - image: cimg/node:17.2.0
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          command: yarn test
-          name: Run tests
-      - run:
-          command: yarn build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      # - run:
+      #     command: yarn test
+      #     name: Run tests
+      # - run:
+      #     command: yarn build
+      #     name: Build app
+      # - persist_to_workspace:
+      #     root: ~/project
+      #     paths:
+      #       - .
+  deploy: # this can be any name you choose
+    docker:
+      - image: cimg/node:17.2.0
+    steps:
+      - checkout
+      # - attach_workspace:
+      #     at: ~/project
+      # - heroku/deploy-via-git: 
+      #     force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
+
 workflows:
   on_commit:
     jobs:
@@ -58,7 +67,18 @@ workflows:
       #       branches:
       #         only: master # only deploy when on main/master
 
+  checking-branch:
+    <<: *default-executor
+    steps:
+      - checkout
+      - run: 
+          command: |
+            if [ << pipeline.git.branch >> != "main" ]; then
+              exit 1
+            fi
+      - continuation/continue:
+          configuration_path: config2.yml  
 workflows:
   run-if-main:
     jobs:
-      - checking-bran
+      - checking-branch
