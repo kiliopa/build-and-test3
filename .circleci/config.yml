@@ -67,18 +67,7 @@ workflows:
       #       branches:
       #         only: master # only deploy when on main/master
 
-  checking-branch:
-    <<: *default-executor
-    steps:
-      - checkout
-      - run: 
-          command: |
-            if [ << pipeline.git.branch >> != "main" ]; then
-              exit 1
-            fi
-      - continuation/continue:
-          configuration_path: config2.yml  
-workflows:
+
   run-if-main:
     jobs:
       - checking-branch
