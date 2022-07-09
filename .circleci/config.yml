@@ -8,6 +8,7 @@ setup: true
 
 jobs:
   build_and_test:
+    working_directory: ~/build-and-test3
     docker:
       - image: cimg/node:17.2.0
     steps:
